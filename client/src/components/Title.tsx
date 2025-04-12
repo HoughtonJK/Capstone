@@ -1,9 +1,10 @@
-
+import {useEffect} from 'react'
 const Title = ({ currentTodos }) => {
 /*/
   return (<p>TBD Title</p>)
 /*/
-  let title = "TBD Title"
+
+  let title = "All Todos"
   return (
     <>
       <label htmlFor="sidebar_toggle">

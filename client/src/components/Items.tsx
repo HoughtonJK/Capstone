@@ -8,9 +8,9 @@ const Items = ({ todos, setTodos, currentTodos }) => {
   const blankTodo = {
            id: undefined,
            title: undefined,
-           day: undefined, 
-           month: undefined,
-           year: undefined,
+           day: '', 
+           month: '',
+           year: '',
            description: undefined,
            completed: false
         };
@@ -29,9 +29,22 @@ const Items = ({ todos, setTodos, currentTodos }) => {
       setSelectedTodo(blankTodo)
     }
   }
+/**/
+  const submitTodo = async (todo) => {
+    if(!todo.id) {
+      setTodos(todos.concat(await addTodo(todo)));
+    } else {
 
+      let updated = await updateTodo(todo.id, todo);
+      let updatedTodos = todos.map(todo => (todo.id === updated.id) ? updated : todo);
+      setTodos(updatedTodos);
+      setSelectedTodo(blankTodo);
+    }
+  }
+/*/
   const submitTodo = async (e) => {
     e.preventDefault();
+    console.log("submitTodo Id", selectedTodo.id)
     console.log(selectedTodo);
     if(!selectedTodo.id) {
       setTodos(todos.concat(await addTodo(selectedTodo)));
@@ -39,11 +52,11 @@ const Items = ({ todos, setTodos, currentTodos }) => {
       let updated = await updateTodo(selectedTodo.id, selectedTodo);
       console.log("Updated:", updated)
       let updatedTodos = todos.map(todo => (todo.id === updated.id) ? updated : todo);
-      setTodos(await updatedTodos);
+      setTodos(updatedTodos);
     }
     toggleModal()
   }
-
+/**/
   const handleDeleteTodo = (id) => {
     deleteTodo(id)
     setTodos(todos.filter(todo => todo.id !== id));
@@ -53,7 +66,7 @@ const Items = ({ todos, setTodos, currentTodos }) => {
     <>
   <div id="items" >
     <header>
-      <Title currentTodos={currentTodos}/>
+      <Title currentTodos={todos}/>
     </header>
     <main>
       <label htmlFor="new_item" onClick={handleNewTodo}>

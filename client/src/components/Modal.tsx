@@ -1,22 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Modal = ({ modalStyle, toggleModal, submitTodo, selectedTodo, setSelectedTodo }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    submitTodo(selectedTodo);
+    toggleModal();
+  }
+
+  useEffect(() => {}, [selectedTodo])
 
   return (
     <>
     <div className="modal" id="modal_layer" style={modalStyle} onClick={toggleModal}></div>
     <div className="modal" id="form_modal" style={modalStyle}>
-      <form action="" method="post" onSubmit={submitTodo}>
+      <form action="" method="post" onSubmit={handleSubmit}>
         <fieldset>
           <ul>
             <li>
               <label htmlFor="title">Title</label>
-              <input type="text" name="title" id="title" defaultValue={selectedTodo.title} placeholder="Item 1" onChange={(e) => setSelectedTodo({...selectedTodo, title: e.target.value})} />
+              <input type="text"
+                     name="title"
+                     id="title"
+                     defaultValue={selectedTodo.title}
+                     placeholder="Item 1"
+                     onChange={(e) => setSelectedTodo({...selectedTodo, title: e.target.value})}
+              />
             </li>
             <li>
               <label htmlFor="due">Due Date</label>
               <div className="date">
-                <select id="due_day" name="due_day" 
+                <select id="due_day"
+                        name="due_day"
+                        value={selectedTodo.day}
                         onChange={(e) => setSelectedTodo({...selectedTodo, day: e.target.value})}>
                       <option>Day</option>
                       <option value="01">1</option>
@@ -51,7 +66,10 @@ const Modal = ({ modalStyle, toggleModal, submitTodo, selectedTodo, setSelectedT
                       <option value="30">30</option>
                       <option value="31">31</option>
                 </select>  /
-                <select id="due_month" name="due_month" onChange={(e) => setSelectedTodo({...selectedTodo, month: e.target.value})}>
+                <select id="due_month"
+                        name="due_month"
+                        value={selectedTodo.month}
+                        onChange={(e) => setSelectedTodo({...selectedTodo, month: e.target.value})}>
                       <option>Month</option>
                       <option value="01">January</option>
                       <option value="02">February</option>
@@ -66,7 +84,11 @@ const Modal = ({ modalStyle, toggleModal, submitTodo, selectedTodo, setSelectedT
                       <option value="11">November</option>
                       <option value="12">December</option>
                 </select> /
-                <select id="due_year" name="due_year" placeholder="year" defaultValue={selectedTodo.year} onChange={(e) => setSelectedTodo({...selectedTodo, year: e.target.value})}>
+                <select id="due_year"
+                        name="due_year"
+                        placeholder="year"
+                        value={selectedTodo.year}
+                        onChange={(e) => setSelectedTodo({...selectedTodo, year: e.target.value})}>
                       <option>Year</option>
                       <option>2014</option>
                       <option>2015</option>
@@ -85,8 +107,13 @@ const Modal = ({ modalStyle, toggleModal, submitTodo, selectedTodo, setSelectedT
             </li>
             <li>
               <label htmlFor="description">Description</label>
-              <textarea cols="50" name="description" rows="7" defaultValue={selectedTodo.description} placeholder="Description" onChange={(e) => setSelectedTodo({...selectedTodo, description: e.target.value})}>
-              </textarea>
+              <textarea cols="50"
+                        name="description"
+                        rows="7"
+                        value={selectedTodo.description}
+                        placeholder="Description"
+                        onChange={(e) => setSelectedTodo({...selectedTodo, description: e.target.value})}
+              ></textarea>
             </li>
             <li>
               <input type="submit" value="Save" />

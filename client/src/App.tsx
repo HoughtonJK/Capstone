@@ -37,15 +37,11 @@ function App() {
     const result = await addTodo(buildSampleTodo()());
     console.log(result);
   };
-//  add()
 
   return (
     <>
       <Sidebar todos={todos} />
       <Items todos={todos} setTodos={setTodos} currentTodos={currentTodos} />
-      <ul>
-       <li>Not a todo</li>
-      </ul>
     </>
   )
 }
